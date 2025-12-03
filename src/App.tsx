@@ -17,17 +17,22 @@ function App() {
 
   const initializeShift = async () => {
     try {
-      const { data: activeShift } = await supabase
-        .from('shifts')
-        .select('*')
-        .eq('active', true)
-        .maybeSingle();
+      // Turno temporal para pruebas - sin validación
+      const tempShift: Shift = {
+        id: 'temp-shift',
+        user_id: 'temp-user',
+        user_name: 'Usuario de Prueba',
+        start_date: new Date().toISOString(),
+        end_date: null,
+        opening_cash: 1000,
+        closing_cash: null,
+        total_sales: 0,
+        total_expenses: 0,
+        active: true,
+        created_at: new Date().toISOString()
+      };
 
-      if (activeShift) {
-        setCurrentShift(activeShift);
-      } else {
-        setShowLoginModal(true);
-      }
+      setCurrentShift(tempShift);
     } catch (error) {
       console.error('Error initializing shift:', error);
     } finally {
